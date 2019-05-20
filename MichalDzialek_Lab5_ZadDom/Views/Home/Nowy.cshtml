@@ -1,0 +1,116 @@
+﻿@model NewObjectModel
+@{
+    ViewData["Title"] = "Nowy";
+}
+
+<h2 class="center-align" id="creator_title">Kreator nowego przedmiotu</h2>
+
+@using (Html.BeginForm("Nowy", "Home", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col s12 m6 offset-m3">
+            <div class="input-field">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { id = "name", required = "required" } })
+                @Html.Label("name", "Nazwa produktu", htmlAttributes: new { @class = "deep-purple-text text-darken-4" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m6 offset-m3">
+            <div class="input-field">
+                <input id="price" name="Price" type="text" data-length="17" required/>
+                @Html.Label("price", "Cena produktu", htmlAttributes: new { @class = "deep-purple-text text-darken-4" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m6 offset-m3">
+            <p><label class="deep-purple-text text-darken-4">Typ przedmiotu:</label></p>
+            <p>
+                <label class="deep-purple-text text-darken-4">
+                    <input class="with-gap" name="Type" type="radio" value="Automat oddechowy" checked />
+                    <span>Automat oddechowy</span>
+                </label>
+            </p>
+            <p>
+                <label class="deep-purple-text text-darken-4">
+                    <input class="with-gap" name="Type" type="radio" value="Boja" />
+                    <span>Boja</span>
+                </label>
+            </p>
+            <p>
+                <label class="deep-purple-text text-darken-4">
+                    <input class="with-gap" name="Type" type="radio" value="Butla" />
+                    <span>Butla</span>
+                </label>
+            </p>
+            <p>
+                <label class="deep-purple-text text-darken-4">
+                    <input class="with-gap" name="Type" type="radio" value="Jacket" />
+                    <span>Kamizelka</span>
+                </label>
+            </p>
+            <p>
+                <label class="deep-purple-text text-darken-4">
+                    <input class="with-gap" name="Type" type="radio" value="Skafander" />
+                    <span>Skafander</span>
+                </label>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m6 offset-m3">
+            <p><label class="deep-purple-text text-darken-4">Zdjęcie przedmiotu:</label></p>
+            <p class="row valign-wrapper">
+                <label class="col s6 deep-purple-text text-darken-4">
+                    <input class="with-gap" name="Photo" type="radio" value="~/images/Aut.Oddech/1.jpg" checked />
+                    <span>Automat Oddechowy</span>
+                </label>
+                <img src="~/images/Aut.Oddech/1.jpg" alt="" class="circle responsive-img col s2 offset-s4">
+            </p>
+            <p class="row valign-wrapper">
+                <label class="col s3 deep-purple-text text-darken-4">
+                    <input class="with-gap" name="Photo" type="radio" value="~/images/Boje/normalna.jpg" />
+                    <span>Boja</span>
+                </label>
+                <img src="~/images/Boje/normalna.jpg" alt="" class="circle responsive-img col s2 offset-s7">
+            </p>
+            <p class="row valign-wrapper">
+                <label class="col s3 deep-purple-text text-darken-4">
+                    <input class="with-gap" name="Photo" type="radio" value="~/images/Butle/6l.jpg" />
+                    <span>Butla</span>
+                </label>
+                <img src="~/images/Butle/6l.jpg" alt="" class="circle responsive-img col s2 offset-s7">
+            </p>
+            <p class="row valign-wrapper">
+                <label class="col s3 deep-purple-text text-darken-4">
+                    <input class="with-gap" name="Photo" type="radio" value="~/images/jacket/1.jpg" />
+                    <span>Kamizelka</span>
+                </label>
+                <img src="~/images/jacket/1.jpg" alt="" class="circle responsive-img col s2 offset-s7">
+            </p>
+            <p class="row valign-wrapper">
+                <label class="col s3 deep-purple-text text-darken-4">
+                    <input class="with-gap" name="Photo" type="radio" value="~/images/Skafandry/mokry.jpg" />
+                    <span>Skafander</span>
+                </label>
+                <img src="~/images/Skafandry/mokry.jpg" alt="" class="circle responsive-img col s2 offset-s7">
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m6 offset-m3">
+            @Html.Label("description", "Opis produktu", htmlAttributes: new { @class = "deep-purple-text text-darken-4" })
+            <textarea id="description" name="Description" class="materialize-textarea" placeholder="Opis produktu..." required></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <button class="btn waves-effect waves-light col s2 offset-s5 deep-purple darken-4" type="submit" name="action">
+            Wyślij
+            <i class="material-icons right">send</i>
+        </button>
+    </div>
+}
+

@@ -1,0 +1,79 @@
+﻿@model List<ObjectTemplateModel>
+
+@{
+    ViewData["Title"] = "Kamizelki";
+}
+<div class="row" style="margin-top: 40px">
+    @foreach (var Kamizelki in Model)
+    {<!--kolumna na karty-->
+        <div class="col s12 l4">
+            <div class="card small">
+                <div class="card-image waves-effect waves-block waves-dark">
+                    <!--Zdjęcie karty-->
+                    <img class="activator responsive-img" src="@Url.Content(Kamizelki.Photo)">
+                </div>
+                <!--Zawartość karty-->
+                <div class="card-content">
+                    <span class="card-title activator deep-purple-text text-accent-4">@Kamizelki.Name<i class="material-icons right">more_vert</i></span>
+                    <!--Ukryty input i przycisk submit do tego-->
+                    <input type="hidden" id="@Kamizelki.UniqueID" value="@Kamizelki.UniqueID" />
+                    <button class="btn waves-effect waves-light deep-purple accent-4" type="submit" onclick="proceed('@Kamizelki.UniqueID', 'POST');">Więcej info</button>
+                    <a class="btn-floating waves-effect waves-light red offset-s4 delete" onclick="proceed('@Kamizelki.UniqueID', 'DELETE');"><i class="material-icons">delete</i></a>
+                </div>
+                <!--Zawartość karty po kliknięciu na zdjęcie-->
+                <div class="card-reveal">
+                    <span class="card-title deep-purple-text text-accent-4">@Kamizelki.Name<i class="material-icons right">close</i></span>
+                    <p><h5>Cena:</h5>@Kamizelki.Price</p>
+                    <p><h5>Typ:</h5>@Kamizelki.Type</p>
+                    <p><h5>Opis:</h5>@Kamizelki.Description</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    //Włączenie przesyłu danych używając AJAX
+    function proceed(id, type) {
+        var target = "#" + id
+
+        //Targetuje id przycisku, które jest dynamiczne
+        var ID = $(target).val();
+
+        //Zmienia go na format jaki znajduje się w NewObjectModel.cs
+        var obj = {
+            UniqueID: ID,
+            RequestType: type
+        }
+
+        //aktywuje funkcję Submit
+        Submit(obj);
+    }
+
+    //Sam AJAX
+    function Submit(obj) {
+        $.ajax({
+            //Namierza stronę
+            url: '@Url.Action("Kamizelki", "Home")',
+            //Typ zapytania
+            type: 'POST',
+            //Dane przesłane
+            data: obj,
+            //Bierze odpowiedź z serwera, która jest albo kodem z ViewModel i wkleja ją do dokumentu albo z naszego delete i odświeża stronę
+            success: function (res) {
+                if (res === "Refresh") {
+                    window.location.reload(true);
+                }
+                else if (res === "Błąd po stronie servera, zawołaj DevOpsa") {
+                    alert(res);
+                }
+                else {
+                    document.write(res);
+                }
+            }
+        })
+    }
+</script>
+
+
+
